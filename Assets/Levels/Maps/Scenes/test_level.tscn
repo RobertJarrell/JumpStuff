@@ -1,0 +1,122 @@
+[gd_scene load_steps=18 format=3 uid="uid://p8l6k6fkp5hk"]
+
+[ext_resource type="Script" path="res://Assets/Levels/Maps/Scripts/level_manager.gd" id="1_xnhhq"]
+[ext_resource type="Script" path="res://Assets/Levels/Maps/Scripts/finish_point.gd" id="2_x4thu"]
+[ext_resource type="PackedScene" uid="uid://bsv7yri6k1kbd" path="res://Assets/Character/Player/Scenes/player_token.tscn" id="3_61nvu"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_hqk6w"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_o7mkg"]
+sky_material = SubResource("ProceduralSkyMaterial_hqk6w")
+
+[sub_resource type="Environment" id="Environment_nx6fl"]
+background_mode = 2
+sky = SubResource("Sky_o7mkg")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hw61r"]
+size = Vector3(10, 1, 20)
+
+[sub_resource type="BoxMesh" id="BoxMesh_r01mg"]
+size = Vector3(10, 1, 20)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ajh3j"]
+size = Vector3(5, 1, 5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_w2wxd"]
+size = Vector3(5, 1, 5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_wd6fp"]
+size = Vector3(3, 1, 3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_o4nu7"]
+size = Vector3(3, 1, 3)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_u3mfm"]
+size = Vector3(5, 3, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_h8uls"]
+size = Vector3(5, 3, 1)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_jep5m"]
+height = 4.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_c0vpw"]
+height = 4.0
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_v8ngv"]
+height = 1.0
+
+[node name="TestLevel" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_nx6fl")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Map" type="Node3D" parent="."]
+
+[node name="Floor" type="StaticBody3D" parent="Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Map/Floor"]
+shape = SubResource("BoxShape3D_hw61r")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Map/Floor"]
+mesh = SubResource("BoxMesh_r01mg")
+
+[node name="MidPlatform" type="StaticBody3D" parent="Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.41955, 0, -6.32562)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Map/MidPlatform"]
+shape = SubResource("BoxShape3D_ajh3j")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Map/MidPlatform"]
+mesh = SubResource("BoxMesh_w2wxd")
+
+[node name="HighPlatform" type="StaticBody3D" parent="Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.43049, 1, -4.806)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Map/HighPlatform"]
+shape = SubResource("BoxShape3D_wd6fp")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Map/HighPlatform"]
+mesh = SubResource("BoxMesh_o4nu7")
+
+[node name="Wall" type="StaticBody3D" parent="Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 1.5, 2)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Map/Wall"]
+shape = SubResource("BoxShape3D_u3mfm")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Map/Wall"]
+mesh = SubResource("BoxMesh_h8uls")
+
+[node name="Pillar" type="StaticBody3D" parent="Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 2, -1)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Map/Pillar"]
+shape = SubResource("CylinderShape3D_jep5m")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Map/Pillar"]
+mesh = SubResource("CylinderMesh_c0vpw")
+
+[node name="LevelManager" type="Node3D" parent="."]
+script = ExtResource("1_xnhhq")
+
+[node name="FinishPoint" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.234374, 0.5, -2.02585)
+script = ExtResource("2_x4thu")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="FinishPoint"]
+shape = SubResource("CylinderShape3D_v8ngv")
+
+[node name="PlayerToken" parent="." instance=ExtResource("3_61nvu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.85, 0)
+
+[connection signal="body_entered" from="FinishPoint" to="FinishPoint" method="_on_body_entered"]

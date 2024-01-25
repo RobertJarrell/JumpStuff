@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://bsv7yri6k1kbd"]
+
+[ext_resource type="Script" path="res://Assets/Character/Player/Scenes/player_token.gd" id="1_nsd5v"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_c52qp"]
+height = 1.7
+radius = 0.3
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_oos45"]
+radius = 0.3
+height = 1.7
+
+[node name="PlayerToken" type="CharacterBody3D"]
+script = ExtResource("1_nsd5v")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CylinderShape3D_c52qp")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_oos45")
+
+[node name="CameraBase" type="Node3D" parent="."]
+
+[node name="Camera3D" type="Camera3D" parent="CameraBase"]
+transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 1.51039, 1.95982)
