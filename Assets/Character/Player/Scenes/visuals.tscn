@@ -1,0 +1,286 @@
+[gd_scene load_steps=23 format=3 uid="uid://bonwyq50at14r"]
+
+[ext_resource type="Script" path="res://Extention/Components/ray_sensor_component.gd" id="1_3ds36"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_yiy23"]
+radius = 0.1
+height = 0.55
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_w7efi"]
+radius = 0.125
+height = 0.35
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_abb7q"]
+top_radius = 0.05
+bottom_radius = 0.045
+height = 0.275
+
+[sub_resource type="SphereMesh" id="SphereMesh_30msf"]
+radius = 0.045
+height = 0.05
+is_hemisphere = true
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_j402x"]
+radius = 0.05
+height = 0.3
+
+[sub_resource type="SphereMesh" id="SphereMesh_y4vxu"]
+radius = 0.065
+height = 0.13
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_i6xvx"]
+top_radius = 0.045
+bottom_radius = 0.05
+height = 0.085
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_3g20u"]
+radius = 0.055
+height = 0.2
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_bnrwp"]
+radius = 0.015
+height = 0.1
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_0iye2"]
+radius = 0.015
+height = 0.05
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_sgnux"]
+radius = 0.063
+height = 0.438
+
+[sub_resource type="SphereMesh" id="SphereMesh_7whax"]
+radius = 0.06
+height = 0.065
+is_hemisphere = true
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_cgii7"]
+radius = 0.063
+height = 0.438
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_a3da6"]
+radius = 0.1
+height = 0.3
+
+[sub_resource type="Animation" id="Animation_3t7r5"]
+resource_name = "Aim"
+
+[sub_resource type="Animation" id="Animation_whccw"]
+resource_name = "Climb"
+
+[sub_resource type="Animation" id="Animation_rm01a"]
+resource_name = "Crouch"
+
+[sub_resource type="Animation" id="Animation_f6c14"]
+resource_name = "Idle"
+
+[sub_resource type="Animation" id="Animation_k0f4g"]
+resource_name = "Jump"
+
+[sub_resource type="Animation" id="Animation_rfjnl"]
+resource_name = "Walk"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2ipob"]
+_data = {
+"Aim": SubResource("Animation_3t7r5"),
+"Climb": SubResource("Animation_whccw"),
+"Crouch": SubResource("Animation_rm01a"),
+"Idle": SubResource("Animation_f6c14"),
+"Jump": SubResource("Animation_k0f4g"),
+"Walk": SubResource("Animation_rfjnl")
+}
+
+[node name="Visuals" type="Node3D"]
+
+[node name="RaySensorComponent" type="Node3D" parent="."]
+script = ExtResource("1_3ds36")
+
+[node name="Head" type="Marker3D" parent="RaySensorComponent"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.63489, 0)
+
+[node name="OverHeadRays" type="Node3D" parent="RaySensorComponent"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.71532, 0)
+
+[node name="RayCast3D" type="RayCast3D" parent="RaySensorComponent/OverHeadRays"]
+target_position = Vector3(0, 1, -1)
+
+[node name="PlatformRays" type="Node3D" parent="RaySensorComponent"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -0.5)
+
+[node name="RayCast3D" type="RayCast3D" parent="RaySensorComponent/PlatformRays"]
+
+[node name="HeadRays" type="Node3D" parent="RaySensorComponent"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.715, 0)
+
+[node name="RayCast3D" type="RayCast3D" parent="RaySensorComponent/HeadRays"]
+target_position = Vector3(0, 0, -0.3)
+
+[node name="ChestRays" type="Node3D" parent="RaySensorComponent"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.24983, 0)
+
+[node name="RayCast3D" type="RayCast3D" parent="RaySensorComponent/ChestRays"]
+target_position = Vector3(0, 0, -0.3)
+
+[node name="AnkleRays" type="Node3D" parent="RaySensorComponent"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
+
+[node name="RayCast3D" type="RayCast3D" parent="RaySensorComponent/AnkleRays"]
+target_position = Vector3(0, 0, -0.25)
+
+[node name="KneeRays" type="Node3D" parent="RaySensorComponent"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.425767, 0)
+
+[node name="RayCast3D" type="RayCast3D" parent="RaySensorComponent/KneeRays"]
+target_position = Vector3(0, 0, -0.3)
+
+[node name="WaistRays" type="Node3D" parent="RaySensorComponent"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.87037, 0)
+
+[node name="RayCast3D" type="RayCast3D" parent="RaySensorComponent/WaistRays"]
+target_position = Vector3(0, 0, -0.3)
+
+[node name="LeftRays" type="Node3D" parent="RaySensorComponent"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25008, 0)
+
+[node name="RayCast3D" type="RayCast3D" parent="RaySensorComponent/LeftRays"]
+target_position = Vector3(-0.35, 0, -0.25)
+
+[node name="RightRays" type="Node3D" parent="RaySensorComponent"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.24973, 0)
+
+[node name="RayCast3D" type="RayCast3D" parent="RaySensorComponent/RightRays"]
+target_position = Vector3(0.35, 0, -0.25)
+
+[node name="UpperBody" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.875, 0)
+
+[node name="Abdomin" type="MeshInstance3D" parent="UpperBody"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.275, 0)
+mesh = SubResource("CapsuleMesh_yiy23")
+
+[node name="Spine" type="Node3D" parent="UpperBody"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.425, 0)
+
+[node name="Chest" type="MeshInstance3D" parent="UpperBody/Spine"]
+transform = Transform3D(-4.53412e-08, 1, -1.51788e-18, -1, -5.70118e-08, -9.31323e-10, -9.31322e-10, -7.45058e-09, 1, 0, 0.075, 0)
+mesh = SubResource("CapsuleMesh_w7efi")
+skeleton = NodePath("../..")
+
+[node name="LeftArm" type="Node3D" parent="UpperBody/Spine/Chest"]
+transform = Transform3D(-0.707107, -0.707107, 0, 0.707107, -0.707107, 0, 0, 0, 1, 0, 0.183655, 1.36833e-09)
+
+[node name="LeftUpperArm" type="MeshInstance3D" parent="UpperBody/Spine/Chest/LeftArm"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.137, 0)
+mesh = SubResource("CylinderMesh_abb7q")
+
+[node name="Elbow" type="Node3D" parent="UpperBody/Spine/Chest/LeftArm/LeftUpperArm"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.137, 0)
+
+[node name="JointMesh" type="MeshInstance3D" parent="UpperBody/Spine/Chest/LeftArm/LeftUpperArm/Elbow"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+mesh = SubResource("SphereMesh_30msf")
+
+[node name="LeftForeArm" type="MeshInstance3D" parent="UpperBody/Spine/Chest/LeftArm/LeftUpperArm/Elbow"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.131596, 0)
+mesh = SubResource("CapsuleMesh_j402x")
+skeleton = NodePath("../../..")
+
+[node name="LeftShoulder" type="MeshInstance3D" parent="UpperBody/Spine/Chest/LeftArm"]
+mesh = SubResource("SphereMesh_y4vxu")
+
+[node name="RightArm" type="Node3D" parent="UpperBody/Spine/Chest"]
+transform = Transform3D(0.707107, -0.707107, 0, 0.707107, 0.707107, 0, 0, 0, 1, 0, -0.184, 2.22045e-16)
+
+[node name="RightUpperArm" type="MeshInstance3D" parent="UpperBody/Spine/Chest/RightArm"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.137, 0)
+mesh = SubResource("CylinderMesh_abb7q")
+
+[node name="Elbow" type="Node3D" parent="UpperBody/Spine/Chest/RightArm/RightUpperArm"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.137, 0)
+
+[node name="JointMesh" type="MeshInstance3D" parent="UpperBody/Spine/Chest/RightArm/RightUpperArm/Elbow"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+mesh = SubResource("SphereMesh_30msf")
+
+[node name="RightForeArm" type="MeshInstance3D" parent="UpperBody/Spine/Chest/RightArm/RightUpperArm/Elbow"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.131596, 0)
+mesh = SubResource("CapsuleMesh_j402x")
+skeleton = NodePath("../../..")
+
+[node name="RightShoulder" type="MeshInstance3D" parent="UpperBody/Spine/Chest/RightArm"]
+mesh = SubResource("SphereMesh_y4vxu")
+
+[node name="Head" type="Node3D" parent="UpperBody/Spine"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
+
+[node name="Neck" type="MeshInstance3D" parent="UpperBody/Spine/Head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.015, -0.003)
+mesh = SubResource("CylinderMesh_i6xvx")
+
+[node name="NeckJoint" type="Node3D" parent="UpperBody/Spine/Head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.04, 0)
+
+[node name="Face" type="MeshInstance3D" parent="UpperBody/Spine/Head/NeckJoint"]
+transform = Transform3D(1, 0, 0, 0, 0.996194, -0.0871557, 0, 0.0871557, 0.996194, 0, 0.0748891, -0.00500093)
+mesh = SubResource("CapsuleMesh_3g20u")
+skeleton = NodePath("../..")
+
+[node name="Eyes" type="MeshInstance3D" parent="UpperBody/Spine/Head/NeckJoint/Face"]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, -1.49012e-08, -1.49012e-08, -8.88178e-16, 1, 0, 0, -0.04)
+mesh = SubResource("CapsuleMesh_bnrwp")
+
+[node name="Nose" type="MeshInstance3D" parent="UpperBody/Spine/Head/NeckJoint/Face"]
+transform = Transform3D(1, 0, 0, 0, 0.939693, -0.34202, 0, 0.34202, 0.939693, 0, -0.017, -0.045)
+mesh = SubResource("CapsuleMesh_0iye2")
+
+[node name="LowerBody" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.875, 0)
+
+[node name="LeftLeg" type="Node3D" parent="LowerBody"]
+transform = Transform3D(0.996195, -0.0871558, 0, 0.0871558, 0.996195, 0, 0, 0, 1, 0.1, 0, 0)
+
+[node name="LeftThigh" type="MeshInstance3D" parent="LowerBody/LeftLeg"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.218, 0)
+mesh = SubResource("CapsuleMesh_sgnux")
+skeleton = NodePath("../..")
+
+[node name="LeftKnee" type="Node3D" parent="LowerBody/LeftLeg/LeftThigh"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.219, 0)
+
+[node name="JointMesh" type="MeshInstance3D" parent="LowerBody/LeftLeg/LeftThigh/LeftKnee"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
+mesh = SubResource("SphereMesh_7whax")
+
+[node name="LeftCalf" type="MeshInstance3D" parent="LowerBody/LeftLeg/LeftThigh/LeftKnee"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.219, 0)
+mesh = SubResource("CapsuleMesh_cgii7")
+skeleton = NodePath("../../../..")
+
+[node name="RightLeg" type="Node3D" parent="LowerBody"]
+transform = Transform3D(0.996195, 0.0871557, 0, -0.0871557, 0.996195, 0, 0, 0, 1, -0.1, 0, 0)
+
+[node name="RightThigh" type="MeshInstance3D" parent="LowerBody/RightLeg"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.218, 0)
+mesh = SubResource("CapsuleMesh_sgnux")
+skeleton = NodePath("../..")
+
+[node name="RightKnee" type="Node3D" parent="LowerBody/RightLeg/RightThigh"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.219, 0)
+
+[node name="JointMesh" type="MeshInstance3D" parent="LowerBody/RightLeg/RightThigh/RightKnee"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
+mesh = SubResource("SphereMesh_7whax")
+
+[node name="RightCalf" type="MeshInstance3D" parent="LowerBody/RightLeg/RightThigh/RightKnee"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.219, 0)
+mesh = SubResource("CapsuleMesh_cgii7")
+skeleton = NodePath("../../../..")
+
+[node name="Waist" type="MeshInstance3D" parent="LowerBody"]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("CapsuleMesh_a3da6")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_2ipob")
+}

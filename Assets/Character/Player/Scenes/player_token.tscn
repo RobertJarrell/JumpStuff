@@ -1,25 +1,74 @@
-[gd_scene load_steps=4 format=3 uid="uid://bsv7yri6k1kbd"]
+[gd_scene load_steps=11 format=3 uid="uid://bsv7yri6k1kbd"]
 
 [ext_resource type="Script" path="res://Assets/Character/Player/Scenes/player_token.gd" id="1_nsd5v"]
+[ext_resource type="PackedScene" uid="uid://bonwyq50at14r" path="res://Assets/Character/Player/Scenes/visuals.tscn" id="2_5hlhc"]
+[ext_resource type="Script" path="res://Extention/Components/Move Components/state_component.gd" id="3_8gbrq"]
+[ext_resource type="Script" path="res://Extention/Components/Move Components/characterbody_controller.gd" id="4_s1u2a"]
+[ext_resource type="Script" path="res://Extention/Components/Move Components/move_component.gd" id="5_2enxf"]
+[ext_resource type="Script" path="res://Extention/Components/Move Components/jump_component.gd" id="6_s7c7c"]
+[ext_resource type="Script" path="res://Extention/Components/Move Components/tumble_component.gd" id="7_p6suv"]
+[ext_resource type="Script" path="res://Extention/Components/Move Components/climb_component.gd" id="8_bamyo"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_c52qp"]
-height = 1.7
-radius = 0.3
+height = 1.0
+radius = 0.147481
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_oos45"]
-radius = 0.3
-height = 1.7
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_aor1s"]
+height = 0.7
+radius = 0.147481
 
-[node name="PlayerToken" type="CharacterBody3D"]
+[node name="PlayerToken" type="CharacterBody3D" node_paths=PackedStringArray("controller", "state")]
 script = ExtResource("1_nsd5v")
+controller = NodePath("CharacterBodyController")
+state = NodePath("StateComponent")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+[node name="Camerabase" type="Node3D" parent="."]
+
+[node name="Camera3D" type="Camera3D" parent="Camerabase"]
+transform = Transform3D(1, 0, 0, 0, 0.984808, 0.173648, 0, -0.173648, 0.984808, 0, 1.6, 1.56522)
+
+[node name="Base" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 shape = SubResource("CylinderShape3D_c52qp")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-mesh = SubResource("CapsuleMesh_oos45")
+[node name="Upper" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.32556, 0)
+shape = SubResource("CylinderShape3D_aor1s")
 
-[node name="CameraBase" type="Node3D" parent="."]
+[node name="Visuals" parent="." instance=ExtResource("2_5hlhc")]
 
-[node name="Camera3D" type="Camera3D" parent="CameraBase"]
-transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 1.51039, 1.95982)
+[node name="StateComponent" type="Node" parent="."]
+script = ExtResource("3_8gbrq")
+controlled = true
+
+[node name="CharacterBodyController" type="Node" parent="." node_paths=PackedStringArray("state", "model")]
+script = ExtResource("4_s1u2a")
+state = NodePath("../StateComponent")
+model = NodePath("..")
+
+[node name="MoveComponent" type="Node" parent="." node_paths=PackedStringArray("model", "state", "controller")]
+script = ExtResource("5_2enxf")
+model = NodePath("..")
+state = NodePath("../StateComponent")
+controller = NodePath("../CharacterBodyController")
+
+[node name="JumpComponent" type="Node" parent="." node_paths=PackedStringArray("model", "state", "controller")]
+script = ExtResource("6_s7c7c")
+model = NodePath("..")
+state = NodePath("../StateComponent")
+controller = NodePath("../CharacterBodyController")
+
+[node name="TumbleComponent" type="Node" parent="." node_paths=PackedStringArray("model", "state", "controller")]
+script = ExtResource("7_p6suv")
+model = NodePath("..")
+state = NodePath("../StateComponent")
+controller = NodePath("../CharacterBodyController")
+
+[node name="ClimbComponent" type="Node" parent="." node_paths=PackedStringArray("sensor", "model", "state", "controller")]
+script = ExtResource("8_bamyo")
+sensor = NodePath("../Visuals/RaySensorComponent")
+model = NodePath("..")
+state = NodePath("../StateComponent")
+controller = NodePath("../CharacterBodyController")
+
+[editable path="Visuals"]
