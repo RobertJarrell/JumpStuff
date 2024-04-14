@@ -4,15 +4,32 @@ extends CharacterBody3D
 @export var controller : CharacterBodyController
 @export var state : StateComponent
 
+var initial_position : Vector3
 
 @onready var visuals = $Visuals
 @onready var upper = $Upper
+@onready var color_rect = $Control/ColorRect
 
 func _ready():
 	
+	initial_position = transform.origin
 	controller.facing.connect(face_toward)
 	
+
+func _process(delta):
 	
+	if transform.origin.y < -17:
+		
+		color_rect.modulate.a = min((-17 - transform.origin.y)/ 15, 1)
+		
+		if transform.origin.y < -40:
+			transform.origin = initial_position
+		
+	else:
+		color_rect.modulate.a *= 1.0 * delta * 4
+	
+
+
 func _physics_process(delta):
 	
 	crouch()

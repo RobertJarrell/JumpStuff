@@ -1,7 +1,7 @@
 class_name JumpComponent
 extends Node
 
-const hangtimeRESET : float = 0.6
+const hangtimeRESET : float = 0.4
 
 @export var model : CharacterBody3D
 @export var state : StateComponent
@@ -49,8 +49,10 @@ func _jump(air_jump : bool = false, wall_jumping : bool = false, normal : Vector
 	
 	else:
 		var push_force = jump_strength * 0.5
-		var jump_direction : Vector3 = Vector3(normal.x * push_force, jump_strength, normal.z * push_force)
+		var jump_direction : Vector3 = Vector3(normal.x * push_force, jump_strength , normal.z * push_force)
 		model.velocity = jump_direction
+		state.last_direction = normal
+		controller.facing.emit(normal)
 		hangtime = hangtimeRESET
 		
 	
@@ -59,10 +61,7 @@ func _jump(air_jump : bool = false, wall_jumping : bool = false, normal : Vector
 func _gravity(delta : float, gravity_modifier : float = 1):
 	
 		model.velocity.y += -gravity * delta * gravity_modifier
-		hangtime = 0.0
-			
 		
-	
 
 func handle_jumping():
 	
@@ -85,7 +84,7 @@ func handle_jumping():
 
 func handle_gravity(delta):
 	var weight : float = 3.0
-	if model.velocity.y < fall_off||model.velocity.y > 0 and not Input.is_action_pressed("Jump")||hangtime <= 0.0:
+	if model.velocity.y < fall_off||model.velocity.y > 0 and not Input.is_action_pressed("Jump")||hangtime < 0.0:
 		if hangtime > hangtimeRESET * 0.5 || !has_jumped:
 			_gravity(delta)
 		else:

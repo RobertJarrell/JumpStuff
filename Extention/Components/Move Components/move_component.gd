@@ -37,16 +37,25 @@ func _move(direction : Vector3, current_speed : float, delta : float):
 		
 	last_direction = direction
 	
+func _air_move(direction : Vector3):
+	var speed = base_speed * air_modifier
+	
+	model.velocity.x = direction.x * speed
+	model.velocity.z = direction.z * speed
+	
+	last_direction = direction
+	
 
 func handle_move(current_direction : Vector3, delta : float):
 	var speed : float
 	if !state.dashing && !state.clinging && !state.climbing:
-		if state.sprinting:
-			speed = base_speed * sprint_modifier
-			
-		elif state.crouched:
+		
+		if state.crouched:
 			speed = base_speed * crouch_modifier
-			
+		
+		elif state.sprinting:
+			speed = base_speed * sprint_modifier
+		
 		else:
 			speed = base_speed
 		
@@ -55,10 +64,9 @@ func handle_move(current_direction : Vector3, delta : float):
 	
 
 func confirm_direction(current_direction : Vector3, delta : float):
-	if !state.grounded and !state.clinging  and !state.climbing:
+	if !state.grounded and !state.clinging  and !state.climbing and !state.dashing:
 		if current_direction != last_direction && current_direction != Vector3.ZERO:
-			var speed = base_speed * air_modifier
-			_move(current_direction, speed, delta)
+			_air_move(current_direction)
 		
 	
 

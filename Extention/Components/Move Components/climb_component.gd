@@ -15,11 +15,11 @@ var ledge_detected : bool = false
 var bar_detected : bool = false
 var step_height : float = 0.25
 var short_distance : float = 0.3
-var hop_height : float = 0.5
+var hop_height : float = 0.8
 var mid_distance : float = 0.5
-var high_hop_height : float = 0.8
-var vault_height : float = 1.2
-var climb_height : float = 1.85
+var high_hop_height : float = 1.25
+var vault_height : float = 1.7
+var climb_height : float = 2.0
 var long_distance : float = 0.75
 var quick_time : float = 0.1
 var mid_time : float = 0.2
@@ -29,7 +29,7 @@ var slow_time : float = 0.4
 func _ready():
 	
 	controller.action.connect(handle_active_vaulting.unbind(1))
-	controller.current_direction.connect(drop.unbind(1))
+	controller.current_direction.connect(drop)
 	
 
 func _physics_process(_delta):
@@ -69,7 +69,7 @@ func _ground_evaluation():
 
 func _air_evaluation():
 	if !sensor.overhead_collision_detected && !state.climbing:
-		if sensor.head_collision_detected and !sensor.chest_collision_detected:
+		if sensor.head_collision_detected:
 			bar_detected = true
 		elif sensor.chest_collision_detected:
 			ledge_detected = true
@@ -90,16 +90,22 @@ func _handle_auto_vaulting():
 			
 	else:
 		if ledge_detected:
-			print("vaulting")
-			_reposition_tween(vault_height, long_distance, mid_time, mid_time)
+			_reposition_tween(vault_height, long_distance, mid_time, mid_time, sensor.get_normal(sensor.chest_rays))
 		
-		if bar_detected:
-		
-			_cling()
+		if !state.dashing:
+			if bar_detected and Input.is_action_pressed("Interact"):
+				_cling()
 		
 	
 
-func _reposition_tween(height, distance, v_time, h_time):
+func _reposition_tween(height : float, distance : float, v_time : float, h_time : float, forward_direction = state.last_direction):
+	var face_direction : Vector3 = Vector3.FORWARD
+	if forward_direction != state.last_direction:
+		face_direction = -forward_direction
+		controller.facing.emit(face_direction)
+		model.velocity = face_direction
+	else:
+		face_direction = state.last_direction
 	
 	model.velocity = Vector3.ZERO
 	if state.dashing:
@@ -113,7 +119,7 @@ func _reposition_tween(height, distance, v_time, h_time):
 	
 	await vm_tween.finished
 	
-	var forward_movement = model.global_transform.origin + (state.last_direction * distance)
+	var forward_movement = model.global_transform.origin + (face_direction * distance)
 	
 	var fm_tween = get_tree().create_tween().set_trans(Tween.TRANS_LINEAR)
 	
@@ -124,39 +130,46 @@ func _reposition_tween(height, distance, v_time, h_time):
 
 func _cling():
 	
+	state.last_direction = -sensor.get_normal(sensor.head_rays)
+	model.velocity = state.last_direction
+	controller.facing.emit(state.last_direction)
 	model.velocity = Vector3.ZERO
 	if state.dashing:
 		state.dashing = false
 	state.clinging = true
+	state.grounded = false
 	
 
-func drop(current_direction : Vector3):
+func drop(current_direction : Vector3, delta : float):
 	
-	if state.clinging and current_direction == Vector3(0, 0, -1):
-		bar_detected = false
-		model.velocity = Vector3.DOWN
+	if state.clinging and Input.is_action_pressed("Backward"):
 		state.clinging = false
+		state.climbing = false
+		controller.apply_gravity.emit(delta)
+		
 		
 	
 
 func handle_active_vaulting():
 	if state.grounded:
 		if high_obstacle_detected:
-			_reposition_tween(high_hop_height, mid_distance, mid_time, mid_time)
+			_reposition_tween(high_hop_height, mid_distance, mid_time, mid_time, sensor.get_normal(sensor.waist_rays))
 			
 		if low_wall_detected:
-			_reposition_tween(vault_height, long_distance, mid_time, mid_time)
+			_reposition_tween(vault_height, long_distance, mid_time, mid_time, sensor.get_normal(sensor.chest_rays))
 			
 		if wall_ledge_detected:
-			_reposition_tween(climb_height, long_distance, slow_time, mid_time)
+			_reposition_tween(climb_height, long_distance, slow_time, mid_time, sensor.get_normal(sensor.head_rays))
 			
 		
 	else:
 		if state.clinging:
-			sensor.check_collision(sensor.platform_rays)
+			sensor.platform_collision_detected = sensor.check_collision(sensor.platform_rays)
+			
 			if sensor.platform_collision_detected:
 				_reposition_tween(climb_height, long_distance, slow_time, mid_time)
 				bar_detected = false
 				state.clinging = false
+				sensor.platform_collision_detected = false
 			
 	

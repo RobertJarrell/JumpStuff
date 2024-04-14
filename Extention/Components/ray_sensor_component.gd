@@ -23,10 +23,6 @@ var right_collision_detected : bool = false
 @onready var platform_rays = $PlatformRays
 
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
-
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(_delta):
@@ -41,6 +37,7 @@ func _physics_process(_delta):
 	right_collision_detected = check_collision(right_rays)
 	
 
+#set collision detect variables
 func check_collision(ray_array : Node3D) -> bool:
 	var detected :bool = false
 	for child in ray_array.get_children():
@@ -52,3 +49,12 @@ func check_collision(ray_array : Node3D) -> bool:
 	return detected
 	
 
+#Query for a collision normal
+func get_normal(ray_array : Node3D) -> Vector3:
+	var surface_normal : Vector3 = Vector3.ZERO
+	for child in ray_array.get_children():
+		var ray = child as RayCast3D
+		if ray.is_colliding():
+			surface_normal = ray.get_collision_normal()
+			return surface_normal
+	return surface_normal

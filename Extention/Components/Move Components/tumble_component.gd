@@ -54,6 +54,9 @@ func _dash_movement(direction : Vector3, modifier : float = 1.0):
 	
 	state.dashing = true
 	can_dash = false
+	if air_dashing:
+		direction.x * 0.5
+		direction.z * 0.5
 	model.velocity = direction * dash_speed * modifier
 	
 	
@@ -93,14 +96,14 @@ func handle_dashing(current_direction : Vector3):
 				dash_direction = wall_normal + dash_direction
 				
 				if dash_direction == Vector3(2,0,0) || dash_direction == Vector3(-2,0,0) || dash_direction == Vector3(0,0,2) || dash_direction == Vector3(0,0,-2):
-					dash_direction += Vector3.UP
+					dash_direction = (Vector3.UP + dash_direction).normalized()
 				isdashing = true
 				
 			
 			else:
 				if Input.is_action_pressed("Jump"):
 					air_dashing = true
-					dash_direction = current_direction + Vector3.UP
+					dash_direction = (current_direction + Vector3.UP).normalized()
 					
 				else:
 					isdashing = true
@@ -117,8 +120,5 @@ func handle_dashing(current_direction : Vector3):
 			_dash_movement(dash_direction, air_modifier)
 		elif isdashing:
 			_dash_movement(dash_direction)
-	
-	if !state.dashing and state.grounded:
-		state.sprinting = true
 		
 

@@ -29,13 +29,17 @@ func _get_input(delta):
 	if Input.is_action_just_pressed("Jump"):
 		jump.emit()
 		
-	if Input.is_action_pressed("Action"):
+	if Input.is_action_just_pressed("Action"):
 		action.emit(direction)
 	
 	if state.grounded:
 		if state.bounceTime > 0:
 			jump.emit()
 		else:
+			
+			if Input.is_action_pressed("Action") && !state.sprinting && !state.dashing:
+				state.sprinting = true
+				
 			move.emit(direction, delta)
 			
 		facing.emit(direction)
@@ -45,9 +49,9 @@ func _get_input(delta):
 		if !state.climbing && !state.clinging && !state.dashing:
 			apply_gravity.emit(delta)
 	
-	if !Input.is_action_pressed("Action"):
+	if !Input.is_action_pressed("Action") && state.sprinting:
 		state.sprinting = false
 		
-	if direction:
+	if direction && !state.clinging:
 		state.last_direction = direction
 
