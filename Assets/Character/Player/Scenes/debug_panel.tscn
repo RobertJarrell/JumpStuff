@@ -1,0 +1,284 @@
+[gd_scene load_steps=3 format=3 uid="uid://dordbqu6fnddt"]
+
+[ext_resource type="Script" path="res://Extention/Components/state_debug_container.gd" id="1_mfcnj"]
+[ext_resource type="Script" path="res://Extention/Components/debug_value.gd" id="2_000et"]
+
+[node name="DebugPanel" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 0
+offset_left = 519.0
+offset_top = 6.0
+offset_right = 777.0
+offset_bottom = 592.0
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="GridContainer" type="GridContainer" parent="PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="StateTracker" type="Label" parent="PanelContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+text = "STATE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="StateValues" type="GridContainer" parent="PanelContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+script = ExtResource("1_mfcnj")
+
+[node name="Controlled" type="HSplitContainer" parent="PanelContainer/MarginContainer/GridContainer/StateValues"]
+layout_mode = 2
+size_flags_horizontal = 3
+script = ExtResource("2_000et")
+
+[node name="Name" type="Label" parent="PanelContainer/MarginContainer/GridContainer/StateValues/Controlled"]
+layout_mode = 2
+text = "Controlled:"
+
+[node name="Value" type="Label" parent="PanelContainer/MarginContainer/GridContainer/StateValues/Controlled"]
+layout_mode = 2
+text = "False"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Grounded" type="HSplitContainer" parent="PanelContainer/MarginContainer/GridContainer/StateValues"]
+layout_mode = 2
+size_flags_horizontal = 3
+script = ExtResource("2_000et")
+
+[node name="Name" type="Label" parent="PanelContainer/MarginContainer/GridContainer/StateValues/Grounded"]
+layout_mode = 2
+text = "Grounded:"
+
+[node name="Value" type="Label" parent="PanelContainer/MarginContainer/GridContainer/StateValues/Grounded"]
+layout_mode = 2
+text = "False"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Dashing" type="HSplitContainer" parent="PanelContainer/MarginContainer/GridContainer/StateValues"]
+layout_mode = 2
+size_flags_horizontal = 3
+script = ExtResource("2_000et")
+
+[node name="Name" type="Label" parent="PanelContainer/MarginContainer/GridContainer/StateValues/Dashing"]
+layout_mode = 2
+text = "Dashing:"
+
+[node name="Value" type="Label" parent="PanelContainer/MarginContainer/GridContainer/StateValues/Dashing"]
+layout_mode = 2
+text = "False
+"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Sprinting" type="HSplitContainer" parent="PanelContainer/MarginContainer/GridContainer/StateValues"]
+layout_mode = 2
+size_flags_horizontal = 3
+script = ExtResource("2_000et")
+
+[node name="Name" type="Label" parent="PanelContainer/MarginContainer/GridContainer/StateValues/Sprinting"]
+layout_mode = 2
+text = "Sprinting:"
+
+[node name="Value" type="Label" parent="PanelContainer/MarginContainer/GridContainer/StateValues/Sprinting"]
+layout_mode = 2
+text = "True"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Crouched" type="HSplitContainer" parent="PanelContainer/MarginContainer/GridContainer/StateValues"]
+layout_mode = 2
+size_flags_horizontal = 3
+script = ExtResource("2_000et")
+
+[node name="Name" type="Label" parent="PanelContainer/MarginContainer/GridContainer/StateValues/Crouched"]
+layout_mode = 2
+text = "Crouched:"
+
+[node name="Value" type="Label" parent="PanelContainer/MarginContainer/GridContainer/StateValues/Crouched"]
+layout_mode = 2
+text = "True"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Climbing" type="HSplitContainer" parent="PanelContainer/MarginContainer/GridContainer/StateValues"]
+layout_mode = 2
+size_flags_horizontal = 3
+script = ExtResource("2_000et")
+
+[node name="Name" type="Label" parent="PanelContainer/MarginContainer/GridContainer/StateValues/Climbing"]
+layout_mode = 2
+text = "Climbing:"
+
+[node name="Value" type="Label" parent="PanelContainer/MarginContainer/GridContainer/StateValues/Climbing"]
+layout_mode = 2
+text = "True"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Clinging" type="HSplitContainer" parent="PanelContainer/MarginContainer/GridContainer/StateValues"]
+layout_mode = 2
+size_flags_horizontal = 3
+script = ExtResource("2_000et")
+
+[node name="Name" type="Label" parent="PanelContainer/MarginContainer/GridContainer/StateValues/Clinging"]
+layout_mode = 2
+text = "Clinging:"
+
+[node name="Value" type="Label" parent="PanelContainer/MarginContainer/GridContainer/StateValues/Clinging"]
+layout_mode = 2
+text = "True"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="CoyoteTime" type="HSplitContainer" parent="PanelContainer/MarginContainer/GridContainer/StateValues"]
+layout_mode = 2
+size_flags_horizontal = 3
+script = ExtResource("2_000et")
+
+[node name="Name" type="Label" parent="PanelContainer/MarginContainer/GridContainer/StateValues/CoyoteTime"]
+layout_mode = 2
+text = "Coyote Time:"
+
+[node name="Value" type="Label" parent="PanelContainer/MarginContainer/GridContainer/StateValues/CoyoteTime"]
+layout_mode = 2
+text = "0.2"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="BounceTime" type="HSplitContainer" parent="PanelContainer/MarginContainer/GridContainer/StateValues"]
+layout_mode = 2
+size_flags_horizontal = 3
+script = ExtResource("2_000et")
+
+[node name="Name" type="Label" parent="PanelContainer/MarginContainer/GridContainer/StateValues/BounceTime"]
+layout_mode = 2
+text = "Bounce Time:"
+
+[node name="Value" type="Label" parent="PanelContainer/MarginContainer/GridContainer/StateValues/BounceTime"]
+layout_mode = 2
+text = "0.2"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="LastDirection" type="HSplitContainer" parent="PanelContainer/MarginContainer/GridContainer/StateValues"]
+layout_mode = 2
+size_flags_horizontal = 3
+script = ExtResource("2_000et")
+
+[node name="Name" type="Label" parent="PanelContainer/MarginContainer/GridContainer/StateValues/LastDirection"]
+layout_mode = 2
+text = "Last Direction:"
+
+[node name="Value" type="Label" parent="PanelContainer/MarginContainer/GridContainer/StateValues/LastDirection"]
+layout_mode = 2
+text = "(0.0,0.0,0.1)"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Climb State" type="Label" parent="PanelContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+text = "CLIMB STATE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ClimbValues" type="GridContainer" parent="PanelContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+
+[node name="BarDetected" type="HSplitContainer" parent="PanelContainer/MarginContainer/GridContainer/ClimbValues"]
+layout_mode = 2
+script = ExtResource("2_000et")
+
+[node name="Name" type="Label" parent="PanelContainer/MarginContainer/GridContainer/ClimbValues/BarDetected"]
+layout_mode = 2
+text = "Bar Detected:"
+
+[node name="Value" type="Label" parent="PanelContainer/MarginContainer/GridContainer/ClimbValues/BarDetected"]
+layout_mode = 2
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="WallLedgeDetected" type="HSplitContainer" parent="PanelContainer/MarginContainer/GridContainer/ClimbValues"]
+layout_mode = 2
+script = ExtResource("2_000et")
+
+[node name="Name" type="Label" parent="PanelContainer/MarginContainer/GridContainer/ClimbValues/WallLedgeDetected"]
+layout_mode = 2
+text = "Wall Ledge Detected:"
+
+[node name="Value" type="Label" parent="PanelContainer/MarginContainer/GridContainer/ClimbValues/WallLedgeDetected"]
+layout_mode = 2
+text = "False"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="LedgeDetected" type="HSplitContainer" parent="PanelContainer/MarginContainer/GridContainer/ClimbValues"]
+layout_mode = 2
+script = ExtResource("2_000et")
+
+[node name="Name" type="Label" parent="PanelContainer/MarginContainer/GridContainer/ClimbValues/LedgeDetected"]
+layout_mode = 2
+text = "Ledge Detected:"
+
+[node name="Value" type="Label" parent="PanelContainer/MarginContainer/GridContainer/ClimbValues/LedgeDetected"]
+layout_mode = 2
+
+[node name="LowWallDetected" type="HSplitContainer" parent="PanelContainer/MarginContainer/GridContainer/ClimbValues"]
+layout_mode = 2
+script = ExtResource("2_000et")
+
+[node name="Name" type="Label" parent="PanelContainer/MarginContainer/GridContainer/ClimbValues/LowWallDetected"]
+layout_mode = 2
+text = "Low Wall Detected:"
+
+[node name="Value" type="Label" parent="PanelContainer/MarginContainer/GridContainer/ClimbValues/LowWallDetected"]
+layout_mode = 2
+
+[node name="HighObstacleDetected" type="HSplitContainer" parent="PanelContainer/MarginContainer/GridContainer/ClimbValues"]
+layout_mode = 2
+script = ExtResource("2_000et")
+
+[node name="Name" type="Label" parent="PanelContainer/MarginContainer/GridContainer/ClimbValues/HighObstacleDetected"]
+layout_mode = 2
+text = "High Obstacle Detected:"
+
+[node name="Value" type="Label" parent="PanelContainer/MarginContainer/GridContainer/ClimbValues/HighObstacleDetected"]
+layout_mode = 2
+text = "False"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="LowObstacleDetected" type="HSplitContainer" parent="PanelContainer/MarginContainer/GridContainer/ClimbValues"]
+layout_mode = 2
+script = ExtResource("2_000et")
+
+[node name="Name" type="Label" parent="PanelContainer/MarginContainer/GridContainer/ClimbValues/LowObstacleDetected"]
+layout_mode = 2
+text = "Low Obstacle Detected:"
+
+[node name="Value" type="Label" parent="PanelContainer/MarginContainer/GridContainer/ClimbValues/LowObstacleDetected"]
+layout_mode = 2
+
+[node name="StepDetected" type="HSplitContainer" parent="PanelContainer/MarginContainer/GridContainer/ClimbValues"]
+layout_mode = 2
+script = ExtResource("2_000et")
+
+[node name="Name" type="Label" parent="PanelContainer/MarginContainer/GridContainer/ClimbValues/StepDetected"]
+layout_mode = 2
+text = "Step Detected:"
+
+[node name="Value" type="Label" parent="PanelContainer/MarginContainer/GridContainer/ClimbValues/StepDetected"]
+layout_mode = 2
